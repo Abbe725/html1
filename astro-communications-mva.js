@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lead Submission Form</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    .form-group {
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <h2 class="text-center">Lead Submission Form</h2>
+    <form id="leadForm">
+      <div class="form-group">
+        <label for="caller_id">Phone Number</label>
+        <input type="text" class="form-control" id="caller_id" name="caller_id" placeholder="Phone Number" required>
+      </div>
+      <div class="form-group">
+        <label for="first_name">First Name</label>
+        <input type="text" class="form-control" id="first_name" name="first_name" placeholder="First Name" required>
+      </div>
+      <div class="form-group">
+        <label for="last_name">Last Name</label>
+        <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Last Name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+      </div>
+      <div class="form-group">
+        <label for="state">State</label>
+        <input type="text" class="form-control" id="state" name="state" placeholder="State" required>
+      </div>
+      <div class="form-group">
+        <label for="zip">Zip Code</label>
+        <input type="text" class="form-control" id="zip" name="zip" placeholder="Zip Code" required>
+      </div>
+      <div class="form-group">
+        <label for="trusted_form_cert_url">Trusted Form URL</label>
+        <input type="text" class="form-control" id="trusted_form_cert_url" name="trusted_form_cert_url" placeholder="Trusted Form URL" required>
+      </div>
+      <input type="hidden" id="traffic_source_id" name="traffic_source_id" value="1000">
+      <button type="button" class="btn btn-primary" onclick="submitForm()">Submit</button>
+    </form>
+    <div id="alertContainer"></div>
+  </div>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+  <!-- Custom script for form submission -->
+  <script>
+    function submitForm() {
+      const form = document.getElementById('leadForm');
+      const formData = new FormData(form);
+
+      const url = 'https://astro-communications-llc.trackdrive.com/posting_instructions/21d41c549c8e44868532c1cf63062a1e?traffic_source_id=1000';
+
+      fetch(url, {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        document.getElementById('alertContainer').innerHTML = "<div class='alert alert-success'>Form submitted successfully!</div>";
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('alertContainer').innerHTML = "<div class='alert alert-danger'>Error submitting the form. Please try again.</div>";
+      });
+    }
+  </script>
+</body>
+</html>
